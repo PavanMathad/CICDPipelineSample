@@ -6,7 +6,7 @@ pipeline {
 environment{
 PYTHON_PATH='${WORKSPACE}'
 access_token = credentials('Github_access_token')
-ENVIRONMENT='pecten_dataset_dev'
+ENVIRONMENT='development'
 MYSQL_CONNECTION_STRING=credentials('connection_string')
 BUCKET_NAME='pecten-duplication-development'
 
@@ -16,7 +16,6 @@ BUCKET_NAME='pecten-duplication-development'
         steps {
           sh 'pip3 install --upgrade virtualenv'
           sh 'python3 -m venv ${WORKSPACE}'
-          sh 'bash -c "source ${WORKSPACE}/bin/activate && apt-get update -y && cat ${WORKSPACE}/packages.txt | xargs apt-get install && pip install wheel && pip3 install -r ${WORKSPACE}/pecten_collection/analyst_rating/jenkins/requirements.txt && git clone https://$access_token@github.com/igenieconsulting/pecten_utils.git && cd ${WORKSPACE}/pecten_utils && pip3 install -r requirements.txt && pip3 install -e."'
 
         }
     }
