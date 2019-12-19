@@ -41,13 +41,13 @@ stages {
   stage('Merge master') {
 	steps {
 		withCredentials([file(credentialsId: 'pecten-google-sa-credential', variable: 'GOOGLE_APPLICATION_CREDENTIALS')]){
+		sh 'git url: "https://github.com/PavanMathad/CICDPipelineSample.git",credentialsId: 'pecten-google-sa-credential,branch: development
 		sh 'git config --global user.email "pavan@pecten.co.uk"'
   		sh 'git config --global user.name "PavanMathad"'
-  		sh 'git fetch --all'
-  		sh 'git checkout development'
-  		sh 'git checkout staging'
-		sh 'git merge staging'
-		sh 'git push origin development:staging'}
+  		sh 'git tag -a tagName -m "Your tag comment"'
+		sh 'git merge development'
+		sh 'git commit -am "Merged develop branch to master'
+		sh "git push origin master"}
 	      }
   }
 	
