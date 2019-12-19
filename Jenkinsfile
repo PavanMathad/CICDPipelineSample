@@ -40,10 +40,11 @@ stages {
     }
   stage('Merge master') {
 	steps {
+		withCredentials([file(credentialsId: 'pecten-google-sa-credential', variable: 'GOOGLE_APPLICATION_CREDENTIALS')]){
   		sh 'git fetch --all'
   		sh 'git checkout staging'
   		sh 'git checkout development'
-  		sh 'git merge staging'
+		sh 'git merge staging'}
 	      }
   }
 	
