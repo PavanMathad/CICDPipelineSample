@@ -46,7 +46,8 @@ stages {
   		sh 'git fetch --all'
   		sh 'git checkout development'
   		sh 'git checkout master'
-		sh 'git merge master'}
+		sh 'git merge master'
+		sh 'git push origin master'}
 	      }
   }
 	
