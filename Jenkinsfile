@@ -12,6 +12,7 @@ BUCKET_NAME='pecten-duplication-development'
 
 }
 
+stages {
   stage('Install pip dependencies') {
         steps {
           sh 'pip3 install --upgrade virtualenv'
@@ -41,6 +42,7 @@ BUCKET_NAME='pecten-duplication-development'
   sh 'git fetch --all'
   sh 'git checkout staging'
   sh 'git checkout development'
-  sh 'git merge staging'
- }
+  sh 'git merge staging'}
+	
+  }
 }
