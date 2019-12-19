@@ -41,6 +41,8 @@ stages {
   stage('Merge master') {
 	steps {
 		withCredentials([file(credentialsId: 'pecten-google-sa-credential', variable: 'GOOGLE_APPLICATION_CREDENTIALS')]){
+		git config --global user.email "pavan@pecten.co.uk"
+  		git config --global user.name "PavanMathad"
   		sh 'git fetch --all'
   		sh 'git checkout staging'
   		sh 'git checkout development'
