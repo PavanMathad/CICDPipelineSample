@@ -12,6 +12,7 @@ BUCKET_NAME='pecten-duplication-development'
 
 }
 
+stages {
   stage('Install pip dependencies') {
         steps {
           sh 'pip3 install --upgrade virtualenv'
@@ -25,26 +26,29 @@ BUCKET_NAME='pecten-duplication-development'
         withCredentials([file(credentialsId: 'pecten-google-sa-credential', variable: 'GOOGLE_APPLICATION_CREDENTIALS')]) {
        
 	sh 'echo "$GOOGLE_SA_CRENTIAL"'
-        sh ". ${WORKSPACE}/bin/activate && python3 ${WORKSPACE}/CICDPipelineSample/automatic_code_review.py" }
+        sh ". ${WORKSPACE}/bin/activate && python3 ${WORKSPACE}/automatic_code_review.py" }
       }
     }
-  }
   
    stage('run Unit Test') {
       steps {
         withCredentials([file(credentialsId: 'pecten-google-sa-credential', variable: 'GOOGLE_APPLICATION_CREDENTIALS')]) {
        
 	sh 'echo "$GOOGLE_SA_CRENTIAL"'
-        sh ". ${WORKSPACE}/bin/activate && python3 ${WORKSPACE}/CICDPipelineSample/unittest/ut_Sample_dev.py" }
+        sh ". ${WORKSPACE}/bin/activate && python3 ${WORKSPACE}/unittest/ut_Sample_dev.py" }
       }
     }
-  }
-  
-  
   stage('Merge master') {
-  sh 'git fetch --all'
-  sh 'git checkout staging'
-  sh 'git checkout development'
-  sh 'git merge staging'
+	steps {
+		withCredentials([file(credentialsId: 'pecten-google-sa-credential', variable: 'GOOGLE_APPLICATION_CREDENTIALS')]){
+		sh 'git config --global user.email "pavan@pecten.co.uk"'
+  		sh 'git config --global user.name "PavanMathad"'
+  		sh 'git fetch --all'
+  		sh 'git checkout staging'
+  		sh 'git checkout development'
+		sh 'git merge staging'}
+	      }
+  }
+	
  }
 }
