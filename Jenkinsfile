@@ -45,8 +45,8 @@ stages {
   		sh 'git config --global user.name "PavanMathad"'
   		sh 'git fetch --all'
   		sh 'git checkout staging'
-  		sh 'git checkout development'
-		sh 'git merge staging'}
+  		sh 'git checkout master'
+		sh 'git merge master'}
 	      }
   }
 	
