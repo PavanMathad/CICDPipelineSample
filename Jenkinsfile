@@ -47,7 +47,7 @@ stages {
   		sh 'git checkout development'
   		sh 'git checkout master'
 		sh 'git merge master'
-		sh 'git push origin master'}
+		sh 'git push origin development:master'}
 	      }
   }
 	
