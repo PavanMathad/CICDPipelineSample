@@ -28,7 +28,6 @@ BUCKET_NAME='pecten-duplication-development'
         sh ". ${WORKSPACE}/bin/activate && python3 ${WORKSPACE}/CICDPipelineSample/automatic_code_review.py" }
       }
     }
-  }
   
    stage('run Unit Test') {
       steps {
@@ -38,9 +37,6 @@ BUCKET_NAME='pecten-duplication-development'
         sh ". ${WORKSPACE}/bin/activate && python3 ${WORKSPACE}/CICDPipelineSample/unittest/ut_Sample_dev.py" }
       }
     }
-  }
-  
-  
   stage('Merge master') {
   sh 'git fetch --all'
   sh 'git checkout staging'
