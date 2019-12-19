@@ -41,7 +41,7 @@ stages {
   stage('Merge master') {
 	steps {
 		withCredentials([file(credentialsId: 'pecten-google-sa-credential', variable: 'GOOGLE_APPLICATION_CREDENTIALS')]){
-		sh 'git url: "https://github.com/PavanMathad/CICDPipelineSample.git",credentialsId: 'pecten-google-sa-credential,branch: development
+		sh 'git url: "ssh://jenkins@https://github.com/PavanMathad/CICDPipelineSample.git",credentialsId: 'pecten-google-sa-credential,branch: development
 		sh 'git config --global user.email "pavan@pecten.co.uk"'
   		sh 'git config --global user.name "PavanMathad"'
   		sh 'git tag -a tagName -m "Your tag comment"'
