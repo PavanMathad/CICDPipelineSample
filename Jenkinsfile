@@ -31,7 +31,7 @@ stages {
 	sh 'echo "$GOOGLE_SA_CRENTIAL"'
 	script {
                    // didAutoCodeReviewSucceed = sh(script: ". ${WORKSPACE}/bin/activate && python3 ${WORKSPACE}/automatic_code_review.py", returnStdout: true)
-		   didAutoCodeReviewSucceed = sh(returnStdout: true, script: '. ${WORKSPACE}/bin/activate && python3 ${WORKSPACE}/automatic_code_review.py').trim()
+		   didAutoCodeReviewSucceed = bat(returnStdout: true, script: 'python3 ${WORKSPACE}/automatic_code_review.py')
                }
 	}
 	println didAutoCodeReviewSucceed
@@ -41,7 +41,7 @@ stages {
    stage('run Unit Test') {
       steps {
 	      script {
-	      if(didAutoCodeReviewSucceed)
+	      if(False)
 	      {
         	withCredentials([file(credentialsId: 'pecten-google-sa-credential', variable: 'GOOGLE_APPLICATION_CREDENTIALS')]) {
        
