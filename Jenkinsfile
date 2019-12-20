@@ -1,6 +1,8 @@
 pipeline {
+	environment {
+        def didAutoCodeReviewSucceed = false
+    }
 	
-	def didAutoCodeReviewSucceed = false
   agent {
     label 'jenkins-k8s-slave' 
   }
