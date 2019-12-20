@@ -34,7 +34,7 @@ stages {
 		   didAutoCodeReviewSucceed = sh(returnStdout: true, script: '. ${WORKSPACE}/bin/activate && python3 ${WORKSPACE}/automatic_code_review.py').trim()
                }
 	}
-	echo didAutoCodeReviewSucceed
+	println "done."
       }
     }
   
