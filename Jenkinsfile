@@ -1,4 +1,6 @@
 pipeline {
+	
+	def didAutoCodeReviewSucceed = false
   agent {
     label 'jenkins-k8s-slave' 
   }
@@ -26,19 +28,23 @@ stages {
         withCredentials([file(credentialsId: 'pecten-google-sa-credential', variable: 'GOOGLE_APPLICATION_CREDENTIALS')]) {
        
 	sh 'echo "$GOOGLE_SA_CRENTIAL"'
-        sh ". ${WORKSPACE}/bin/activate && python3 ${WORKSPACE}/automatic_code_review.py" }
+	didAutoCodeReviewSucceed = sh(script: ". ${WORKSPACE}/bin/activate && python3 ${WORKSPACE}/automatic_code_review.py", returnStdout: true)}
+	print(didAutoCodeReviewSucceed)
       }
     }
   
    stage('run Unit Test') {
       steps {
-        withCredentials([file(credentialsId: 'pecten-google-sa-credential', variable: 'GOOGLE_APPLICATION_CREDENTIALS')]) {
+	      if(didAutoCodeReviewSucceed)
+	      {
+        	withCredentials([file(credentialsId: 'pecten-google-sa-credential', variable: 'GOOGLE_APPLICATION_CREDENTIALS')]) {
        
-	sh 'echo "$GOOGLE_SA_CRENTIAL"'
-        sh ". ${WORKSPACE}/bin/activate && python3 ${WORKSPACE}/unittest/ut_Sample_dev.py" }
+		sh 'echo "$GOOGLE_SA_CRENTIAL"'
+        	sh ". ${WORKSPACE}/bin/activate && python3 ${WORKSPACE}/unittest/ut_Sample_dev.py" }
+	      }
       }
     }
-  stage('Merge master') {
+  /*stage('Merge master') {
 	steps {
 		withCredentials([file(credentialsId: 'pecten-google-sa-credential', variable: 'GOOGLE_APPLICATION_CREDENTIALS')]){
 		sh 'git url: "ssh://jenkins@https://github.com/PavanMathad/CICDPipelineSample.git",credentialsId: 'pecten-google-sa-credential',branch:development'
@@ -50,6 +56,6 @@ stages {
 		sh "git push origin master"}
 	      }
   }
-	
+*/	
  }
 }
