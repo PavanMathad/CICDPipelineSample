@@ -28,13 +28,17 @@ stages {
         withCredentials([file(credentialsId: 'pecten-google-sa-credential', variable: 'GOOGLE_APPLICATION_CREDENTIALS')]) {
        
 	sh 'echo "$GOOGLE_SA_CRENTIAL"'
-	didAutoCodeReviewSucceed = sh(script: ". ${WORKSPACE}/bin/activate && python3 ${WORKSPACE}/automatic_code_review.py", returnStdout: true)}
+	script {
+                    didAutoCodeReviewSucceed = sh(script: ". ${WORKSPACE}/bin/activate && python3 ${WORKSPACE}/automatic_code_review.py", returnStdout: true)
+               }
+	}
 	print(didAutoCodeReviewSucceed)
       }
     }
   
    stage('run Unit Test') {
       steps {
+	      script {
 	      if(didAutoCodeReviewSucceed)
 	      {
         	withCredentials([file(credentialsId: 'pecten-google-sa-credential', variable: 'GOOGLE_APPLICATION_CREDENTIALS')]) {
@@ -42,6 +46,7 @@ stages {
 		sh 'echo "$GOOGLE_SA_CRENTIAL"'
         	sh ". ${WORKSPACE}/bin/activate && python3 ${WORKSPACE}/unittest/ut_Sample_dev.py" }
 	      }
+	    }
       }
     }
   /*stage('Merge master') {
