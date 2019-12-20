@@ -1,4 +1,4 @@
-//def didAutoCodeReviewSucceed = false
+def didAutoCodeReviewSucceed = false
 pipeline {
 	
   agent {
@@ -25,7 +25,7 @@ stages {
 
   stage('run automatic code review') {
       steps {
-	def didAutoCodeReviewSucceed = false
+	//def didAutoCodeReviewSucceed = false
         withCredentials([file(credentialsId: 'pecten-google-sa-credential', variable: 'GOOGLE_APPLICATION_CREDENTIALS')]) {
        
 	sh 'echo "$GOOGLE_SA_CRENTIAL"'
