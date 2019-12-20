@@ -29,7 +29,8 @@ stages {
        
 	sh 'echo "$GOOGLE_SA_CRENTIAL"'
 	script {
-                    didAutoCodeReviewSucceed = sh(script: ". ${WORKSPACE}/bin/activate && python3 ${WORKSPACE}/automatic_code_review.py", returnStdout: true)
+                   // didAutoCodeReviewSucceed = sh(script: ". ${WORKSPACE}/bin/activate && python3 ${WORKSPACE}/automatic_code_review.py", returnStdout: true)
+		   didAutoCodeReviewSucceed = sh(returnStdout: true, script: '. ${WORKSPACE}/bin/activate && python3 ${WORKSPACE}/automatic_code_review.py').trim()
                }
 	}
 	print(didAutoCodeReviewSucceed)
