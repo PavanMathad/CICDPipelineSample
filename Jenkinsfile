@@ -41,7 +41,7 @@ stages {
                }
 		
 	sh 'echo "$didAutoCodeReviewSucceed"'
-	if(didAutoCodeReviewSucceed)
+	if(didAutoCodeReviewSucceed == True)
 	      currentBuild.result = 'UNSTABLE'
 	}
 	
