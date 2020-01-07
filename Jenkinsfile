@@ -1,4 +1,4 @@
-def didAutoCodeReviewSucceed = True
+def didAutoCodeReviewSucceed = true
 pipeline {
 	
   agent {
