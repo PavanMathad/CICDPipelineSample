@@ -1,4 +1,4 @@
-def didAutoCodeReviewSucceed = false
+
 pipeline {
 	
   agent {
@@ -25,19 +25,24 @@ stages {
 
   stage('run automatic code review') {
       steps {
-	//def didAutoCodeReviewSucceed = false
+	def didAutoCodeReviewSucceed = false
         withCredentials([file(credentialsId: 'pecten-google-sa-credential', variable: 'GOOGLE_APPLICATION_CREDENTIALS')]) {
        
 	sh 'echo "$GOOGLE_SA_CRENTIAL"'
+		
 	script {
-                   //didAutoCodeReviewSucceed = sh(script: ". ${WORKSPACE}/bin/activate && python3 ${WORKSPACE}/automatic_code_review.py", returnStdout: true)
-			sh 'python3 ${WORKSPACE}/automatic_code_review.py; echo $? > status'
-			didAutoCodeReviewSucceed = readFile('status').trim()
+                   didAutoCodeReviewSucceed = sh(script: ". ${WORKSPACE}/bin/activate && python3 ${WORKSPACE}/automatic_code_review.py", returnStdout: true)
+			//sh 'python3 ${WORKSPACE}/automatic_code_review.py; echo $? > status'
+			//didAutoCodeReviewSucceed = readFile('status').trim()
 	           //didAutoCodeReviewSucceed = sh(script: 'python3 ${WORKSPACE}/automatic_code_review.py', returnStdout: true).split("\r?\n")
 		   //didAutoCodeReviewSucceed = bat(returnStdout: true, script: 'python3 ${WORKSPACE}/automatic_code_review.py')
                }
+		
+	sh 'echo "$didAutoCodeReviewSucceed"'
+	if(!didAutoCodeReviewSucceed)
+	      currentBuild.result = 'UNSTABLE'
 	}
-	println didAutoCodeReviewSucceed
+	
       }
     }
   
