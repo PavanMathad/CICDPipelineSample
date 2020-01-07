@@ -40,7 +40,7 @@ stages {
 	      		//currentBuild.result = 'UNSTABLE'
                }
 		
-		sh 'echo "${didAutoCodeReviewSucceed}"'
+		//sh 'echo "${didAutoCodeReviewSucceed}"'
 	
 	}
 	
