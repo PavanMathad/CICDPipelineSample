@@ -1,4 +1,4 @@
-//def didAutoCodeReviewSucceed = false
+def didAutoCodeReviewSucceed = false
 pipeline {
 	
   agent {
@@ -30,8 +30,8 @@ stages {
        
 	sh 'echo "$GOOGLE_SA_CRENTIAL"'
 	script {
-                   // didAutoCodeReviewSucceed = sh(script: ". ${WORKSPACE}/bin/activate && python3 ${WORKSPACE}/automatic_code_review.py", returnStdout: true)
-		   didAutoCodeReviewSucceed = bat(returnStdout: true, script: 'python3 ${WORKSPACE}/automatic_code_review.py')
+                   didAutoCodeReviewSucceed = sh(script: ". ${WORKSPACE}/bin/activate && python3 ${WORKSPACE}/automatic_code_review.py", returnStdout: true)
+		   //didAutoCodeReviewSucceed = bat(returnStdout: true, script: 'python3 ${WORKSPACE}/automatic_code_review.py')
                }
 	}
 	println didAutoCodeReviewSucceed
@@ -41,7 +41,7 @@ stages {
    stage('run Unit Test') {
       steps {
 	      script {
-	      if(true)
+	      if(didAutoCodeReviewSucceed)
 	      {
         	withCredentials([file(credentialsId: 'pecten-google-sa-credential', variable: 'GOOGLE_APPLICATION_CREDENTIALS')]) {
        
