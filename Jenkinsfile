@@ -37,7 +37,7 @@ stages {
 		   //didAutoCodeReviewSucceed = readFile('status').trim()
 	           //didAutoCodeReviewSucceed = sh(script: 'python3 ${WORKSPACE}/automatic_code_review.py', returnStdout: true).split("\r?\n")
 		   //didAutoCodeReviewSucceed = bat(returnStdout: true, script: 'python3 ${WORKSPACE}/automatic_code_review.py')
-		   if(didAutoCodeReviewSucceed == true)
+		   if(didAutoCodeReviewSucceed == false)
 	      		currentBuild.result = 'UNSTABLE'
                }
 		
