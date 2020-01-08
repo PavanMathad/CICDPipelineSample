@@ -69,9 +69,10 @@ stages {
 		sh 'git commit -am "Merged develop branch to master'
 		sh "git push origin master"}*/
 			withCredentials([file(credentialsId: 'pecten-google-sa-credential', variable: 'GOOGLE_APPLICATION_CREDENTIALS')]) {
-			sh('git commit -m "initial commit"')
+			
 			sh ('git config --global user.email "pavan@pecten.co.uk"')
   			sh ('git config --global user.name "PavanMathad"')
+			sh('git commit -m "initial commit"')
    			sh("git push origin development:staging")
 
 	      }
