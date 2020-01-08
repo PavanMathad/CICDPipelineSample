@@ -47,7 +47,7 @@ stages {
    stage('run Unit Test') {
       steps {
 	      script {
-	      if(didAutoCodeReviewSucceed)
+	      
 	      {
         	withCredentials([file(credentialsId: 'pecten-google-sa-credential', variable: 'GOOGLE_APPLICATION_CREDENTIALS')]) {
        
