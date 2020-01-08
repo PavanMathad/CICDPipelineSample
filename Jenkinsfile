@@ -1,4 +1,3 @@
-def didAutoCodeReviewSucceed = true
 pipeline {
 	
   agent {
@@ -32,17 +31,14 @@ stages {
 		
 	script {
 		   sh ". ${WORKSPACE}/bin/activate"
-                   didAutoCodeReviewSucceed = sh(script: "python3 ${WORKSPACE}/automatic_code_review.py", returnStdout: true)
+                   sh "python3 ${WORKSPACE}/automatic_code_review.py"
 		   //sh 'python3 ${WORKSPACE}/automatic_code_review.py; echo $? > status'
 		   //didAutoCodeReviewSucceed = readFile('status').trim()
 	           //didAutoCodeReviewSucceed = sh(script: 'python3 ${WORKSPACE}/automatic_code_review.py', returnStdout: true).split("\r?\n")
 		   //didAutoCodeReviewSucceed = bat(returnStdout: true, script: 'python3 ${WORKSPACE}/automatic_code_review.py')
-		   if(didAutoCodeReviewSucceed == false)
-	      		currentBuild.result = 'UNSTABLE'
-               }
+		 }
 		
-		sh 'echo "${didAutoCodeReviewSucceed}"'
-	
+		
 	}
 	
       }
@@ -61,18 +57,21 @@ stages {
 	    }
       }
     }
-  /*stage('Merge master') {
+	
+  stage('Merge master') {
 	steps {
-		withCredentials([file(credentialsId: 'pecten-google-sa-credential', variable: 'GOOGLE_APPLICATION_CREDENTIALS')]){
-		sh 'git url: "ssh://jenkins@https://github.com/PavanMathad/CICDPipelineSample.git",credentialsId: 'pecten-google-sa-credential',branch:development'
+		/*withCredentials([file(credentialsId: 'pecten-google-sa-credential', variable: 'GOOGLE_APPLICATION_CREDENTIALS')]){
+		/*sh 'git url: "ssh://jenkins@https://github.com/PavanMathad/CICDPipelineSample.git",credentialsId: 'pecten-google-sa-credential',branch:development'
 		sh 'git config --global user.email "pavan@pecten.co.uk"'
   		sh 'git config --global user.name "PavanMathad"'
   		sh 'git tag -a tagName -m "Your tag comment"'
 		sh 'git merge development'
 		sh 'git commit -am "Merged develop branch to master'
-		sh "git push origin master"}
+		sh "git push origin master"}*/
+			withCredentials([sshUserPrivateKey(credentialsId: 'pecten-google-sa-credential', variable: 'GOOGLE_APPLICATION_CREDENTIALS')]) {
+   			sh("git push origin development:staging")
+
 	      }
-  }
-*/	
+  }	
  }
 }
