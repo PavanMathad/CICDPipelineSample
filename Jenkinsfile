@@ -48,12 +48,12 @@ stages {
       steps {
 	      script {
 	      
-	      {
+
         	withCredentials([file(credentialsId: 'pecten-google-sa-credential', variable: 'GOOGLE_APPLICATION_CREDENTIALS')]) {
        
 		sh 'echo "$GOOGLE_SA_CRENTIAL"'
         	sh ". ${WORKSPACE}/bin/activate && python3 ${WORKSPACE}/unittest/ut_Sample_dev.py" }
-	      }
+
 	    }
       }
     }
