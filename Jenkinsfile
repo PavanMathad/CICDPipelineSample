@@ -68,7 +68,7 @@ stages {
 		sh 'git merge development'
 		sh 'git commit -am "Merged develop branch to master'
 		sh "git push origin master"}*/
-			withCredentials([sshUserPrivateKey(credentialsId: 'pecten-google-sa-credential', variable: 'GOOGLE_APPLICATION_CREDENTIALS')]) {
+			withCredentials([file(credentialsId: 'pecten-google-sa-credential', variable: 'GOOGLE_APPLICATION_CREDENTIALS')]) {
    			sh("git push origin development:staging")
 
 	      }
